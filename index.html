@@ -1,167 +1,154 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <title>Rose Day 🌹</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
 <style>
+*{box-sizing:border-box}
 body{
-  background:linear-gradient(135deg,#ffe6ea,#fff);
-  font-family:Poppins,sans-serif;
-  text-align:center;
-  padding:30px;
-  overflow:hidden;
+ margin:0;
+ height:100vh;
+ font-family:Poppins;
+ background:radial-gradient(circle at top,#ff8fab,#ffe6ea 65%);
+ overflow:hidden;
+ color:#fff;
 }
 
-h1{color:#e63946}
-p{font-size:18px}
-
-img{
-  width:160px;
-  height:160px;
-  border-radius:50%;
-  border:4px solid #e63946;
-  margin-top:15px;
+/* Card */
+.card{
+ position:absolute;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ width:90%;
+ max-width:380px;
+ padding:28px;
+ border-radius:24px;
+ background:rgba(255,255,255,.18);
+ backdrop-filter:blur(18px);
+ box-shadow:0 20px 60px rgba(0,0,0,.25);
+ text-align:center;
 }
 
+/* Image */
+.card img{
+ width:130px;
+ height:130px;
+ border-radius:50%;
+ border:4px solid rgba(255,255,255,.6);
+ margin-bottom:12px;
+}
+
+/* Rose */
 #rose{
-  font-size:80px;
-  cursor:pointer;
-  transition:transform 0.3s;
+ font-size:90px;
+ cursor:pointer;
+ transition:.3s;
 }
-#rose:hover{
-  transform:scale(1.2) rotate(-10deg);
-}
+#rose:hover{transform:scale(1.15)}
 
-/* Floating hearts */
+/* Hearts */
 .heart{
-  position:fixed;
-  font-size:20px;
-  animation:floatUp 3s linear forwards;
+ position:fixed;
+ bottom:0;
+ font-size:22px;
+ animation:floatUp 3s linear forwards;
 }
 @keyframes floatUp{
-  to{
-    transform:translateY(-120vh);
-    opacity:0;
-  }
+ to{transform:translateY(-120vh);opacity:0}
 }
 
-/* Falling petals */
-.petal{
-  position:fixed;
-  top:-10px;
-  font-size:20px;
-  animation:fall linear forwards;
-}
-@keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(360deg);
-    opacity:0.8;
-  }
-}
-
-#countdown{
-  margin-top:20px;
-  font-size:18px;
-  color:#e63946;
-}
-
+/* Button */
 #nextBtn{
-  margin-top:25px;
-  padding:12px 26px;
-  border:none;
-  border-radius:30px;
-  font-size:16px;
-  background:#e63946;
-  color:white;
-  cursor:pointer;
-  display:none;
+ display:none;
+ margin-top:18px;
+ padding:12px 30px;
+ border:none;
+ border-radius:30px;
+ font-size:15px;
+ background:linear-gradient(135deg,#ff4d6d,#ff85a1);
+ color:#fff;
+ cursor:pointer;
 }
 
-audio{display:none;}
+/* Countdown */
+#countdown{
+ margin-top:10px;
+ font-size:14px;
+ opacity:.9;
+}
 </style>
 </head>
 
 <body>
 
-<!-- DATE LOCK -->
-<script>
-const allowedDate = new Date(2026,1,7);
-if(new Date() < allowedDate){
- document.body.innerHTML = `
- <h2 style="margin-top:40vh;color:#e63946">
- ⏳ This surprise unlocks on Rose Day 🌹
- </h2>`;
-}
-</script>
+<div class="card">
+ <img src="dimpal.PNG" alt="Dimpal">
+ <h2>Happy Rose Day 🌹</h2>
+ <p id="text"></p>
 
-<audio autoplay loop>
-  <source src="music.mp3" type="audio/mpeg">
-</audio>
+ <div id="rose">🌹</div>
 
-<h1>🌹 Happy Rose Day</h1>
-<h2>Tuggu ❤️</h2>
+ <div id="countdown"></div>
 
-<img src="dimpal.jpg">
+ <button id="nextBtn" onclick="location.href='propose.html'">
+  Next Day → 💍
+ </button>
 
-<p>Tap the rose 🌹</p>
-<div id="rose" onclick="releaseHearts()">🌹</div>
-
-<p>
-Just like this rose,<br>
-you make my life beautiful every day 💖 <br>
-Ldai mt krna is saal
-</p>
-
-<div id="countdown"></div>
-
-<button id="nextBtn" onclick="goNext()">Next Day → 🤗</button>
-
-<p><b>From Monty ❤️</b></p>
+ <p style="margin-top:14px;font-size:13px">From Monty ❤️</p>
+</div>
 
 <script>
-// Heart burst
-function releaseHearts(){
-  for(let i=0;i<25;i++){
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML=Math.random()>0.5?"❤️":"🌸";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.bottom="0px";
-    heart.style.animationDuration=(2+Math.random()*2)+"s";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),4000);
-  }
-}
+// Typewriter
+const msg = "Just like this rose, you make my world beautiful.";
+let t = 0;
+setInterval(() => {
+ if(t < msg.length){
+  document.getElementById("text").innerHTML += msg.charAt(t);
+  t++;
+ }
+}, 50);
 
-// Falling petals background
+// Rose click
+document.getElementById("rose").addEventListener("click", () => {
+
+ // hearts animation
+ for(let i=0;i<30;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=Math.random()>0.5?"❤️":"🌸";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+ }
+
+ // show button
+ //document.getElementById("nextBtn").style.display="inline-block";
+});
+
+// Countdown
+const target = new Date("Feb 8, 2026 00:00:00").getTime();
+
+
 setInterval(()=>{
-  const petal=document.createElement("div");
-  petal.className="petal";
-  petal.innerHTML="🌸";
-  petal.style.left=Math.random()*100+"vw";
-  petal.style.animationDuration=(6+Math.random()*4)+"s";
-  document.body.appendChild(petal);
-  setTimeout(()=>petal.remove(),10000);
-},500);
+ let now = new Date().getTime();
+ let diff = target - now;
 
-// Countdown + auto next button
-const nextDayDate = new Date("Feb 8, 2026 00:00:00").getTime();
-setInterval(()=>{
-  const now=new Date().getTime();
-  const d=nextDayDate-now;
-
-  if(d <= 0){
-    document.getElementById("countdown").innerHTML="🤗 Propose Day is unlocked!";
-    document.getElementById("nextBtn").style.display="inline-block";
-  } else {
-    document.getElementById("countdown").innerHTML=
-    `⏳ Next surprise in ${Math.floor(d/3600000)}h ${Math.floor(d/60000)%60}m ${Math.floor(d/1000)%60}s`;
-  }
+ if(diff <= 0){
+  document.getElementById("countdown").innerHTML =
+   "🤍 Propose Day Unlocked";
+  document.getElementById("nextBtn").style.display="inline-block";
+ }else{
+  let h = Math.floor(diff / 3600000);
+  let m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById("countdown").innerHTML =
+   `⏳ Next in ${h}h ${m}m`;
+ }
 },1000);
-
-function goNext(){
-  window.location.href="propose.html";
-}
 </script>
 
 </body>

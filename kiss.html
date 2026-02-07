@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Kiss Day 😘</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  font-family:Poppins;
+  background:radial-gradient(circle at top,#ff5f8f,#1a0010 70%);
+  overflow:hidden;
+  color:#fff;
+}
+
+/* Soft glow animation */
+@keyframes glow{
+  0%{box-shadow:0 0 15px rgba(255,77,109,.4)}
+  100%{box-shadow:0 0 35px rgba(255,77,109,.9)}
+}
+
+/* Glass card */
+.card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  max-width:390px;
+  padding:30px;
+  border-radius:28px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(20px);
+  animation:glow 2s infinite alternate;
+  text-align:center;
+}
+
+/* Kiss emoji */
+#kiss{
+  font-size:100px;
+  cursor:pointer;
+  transition:.4s;
+  margin:12px 0;
+  filter:drop-shadow(0 10px 25px rgba(0,0,0,.6));
+}
+#kiss:hover{transform:scale(1.2) rotate(-8deg)}
+
+/* Lip prints */
+.lip{
+  position:fixed;
+  bottom:0;
+  font-size:26px;
+  animation:floatUp 3s linear forwards;
+}
+@keyframes floatUp{
+  to{transform:translateY(-120vh);opacity:0}
+}
+
+/* Progress bar */
+.progress{
+  margin:18px 0;
+  height:8px;
+  border-radius:10px;
+  background:rgba(255,255,255,.25);
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  width:85%;
+  background:linear-gradient(90deg,#ff2f6d,#ff85a1);
+}
+
+/* Next button */
+#next{
+  display:none;
+  margin-top:16px;
+  padding:12px 32px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  font-weight:600;
+  background:linear-gradient(135deg,#ff2f6d,#ff85a1);
+  color:#fff;
+  cursor:pointer;
+  box-shadow:0 12px 30px rgba(0,0,0,.4);
+}
+
+#timer{
+  margin-top:12px;
+  font-size:14px;
+  opacity:.9;
+}
+</style>
+</head>
+
+<body>
+
+<!-- DATE LOCK -->
+<script>
+if(new Date() < new Date(2026,1,13)){
+  document.body.innerHTML =
+  "<h2 style='text-align:center;margin-top:40vh'>⏳ Kiss Day unlocks on 13 Feb 😘</h2>";
+}
+</script>
+
+<div class="card">
+  <h2>Happy Kiss Day 😘</h2>
+  <p>Tap for a sweet kiss</p>
+
+  <div id="kiss" onclick="kissLove()">😘</div>
+
+  <p id="msg">
+    Dimpal, every kiss from you makes my world stop 💋
+  </p>
+
+  <div class="progress"><span></span></div>
+  <small>Valentine Week Journey</small>
+
+  <p id="timer"></p>
+  <button id="next" onclick="location.href='valentine.html'">
+    Valentine’s Day → ❤️
+  </button>
+
+  <p style="margin-top:14px;font-size:13px">From Monty ❤️</p>
+</div>
+
+<script>
+/* Kiss Interaction */
+function kissLove(){
+  for(let i=0;i<36;i++){
+    let l=document.createElement("div");
+    l.className="lip";
+    l.innerHTML = Math.random()>0.5 ? "💋" : "❤️";
+    l.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(l);
+    setTimeout(()=>l.remove(),3000);
+  }
+}
+
+/* Countdown Timer */
+const unlockValentine = new Date("Feb 14, 2026 00:00:00").getTime();
+
+const kissTimer = setInterval(()=>{
+  const now = new Date().getTime();
+  const diff = unlockValentine - now;
+
+  if(diff <= 0){
+    document.getElementById("timer").innerText =
+      "❤️ Valentine’s Day Unlocked!";
+    document.getElementById("next").style.display = "inline-block";
+    clearInterval(kissTimer);
+    return;
+  }
+
+  const h = Math.floor(diff / (1000*60*60));
+  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const s = Math.floor((diff % (1000*60)) / 1000);
+
+  document.getElementById("timer").innerText =
+    `⏳ Next unlock in ${h}h ${m}m ${s}s`;
+},1000);
+</script>
+
+</body>
+</html>

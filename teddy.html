@@ -1,0 +1,50 @@
+<!DOCTYPE html><html><head>
+<title>Teddy Day 🧸</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;height:100vh;font-family:Poppins;background:radial-gradient(circle,#f8a500,#e232f9);color:#f3f3f3;overflow:hidden}
+.card{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:90%;max-width:380px;padding:28px;border-radius:24px;background:rgba(255,255,255,.15);backdrop-filter:blur(18px);text-align:center}
+#teddy{font-size:90px;cursor:pointer}
+.heart{position:fixed;bottom:0;font-size:22px;animation:up 3s linear forwards}
+@keyframes up{to{transform:translateY(-120vh);opacity:0}}
+#next{display:none;margin-top:16px;padding:12px 30px;border:none;border-radius:30px;background:linear-gradient(135deg,#ff4d6d,#ff85a1);color:#fff}
+#countdown{font-size:14px;margin-top:12px}
+</style></head>
+
+<body>
+<script>
+const pageDate=new Date("Feb 10, 2026 00:00:00");
+if(new Date()<pageDate){
+ document.body.innerHTML="<h2 style='text-align:center;margin-top:40vh'>⏳ Teddy Day Locked</h2>";
+}
+</script>
+
+<div class="card">
+<h2>Happy Teddy Day 🧸</h2>
+<div id="teddy">🧸</div>
+<p>This teddy is jealous of me hugging you.</p>
+<div id="countdown"></div>
+<button id="next" onclick="location.href='promise.html'">Next → 🤞</button>
+<p>From Monty ❤️</p>
+</div>
+
+<script>
+document.getElementById("teddy").onclick=()=>{
+ for(let i=0;i<20;i++){
+  let h=document.createElement("div");
+  h.className="heart";h.innerHTML="🧸";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+ }
+};
+const unlockTime=new Date("Feb 11, 2026 00:00:00").getTime();
+const next=document.getElementById("next"),cd=document.getElementById("countdown");
+setInterval(()=>{
+ let d=unlockTime-Date.now();
+ if(d<=0){cd.innerHTML="🤍 Promise Day Unlocked";next.style.display="inline-block";}
+ else cd.innerHTML=`⏳ ${Math.floor(d/3600000)}h ${Math.floor(d/60000)%60}m`;
+},1000);
+</script>
+</body></html>

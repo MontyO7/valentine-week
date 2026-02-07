@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dimpal ❤️ Valentine</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;height:100vh;font-family:Poppins;
+ background:radial-gradient(circle at top,#ff1744,#ffb3c1 70%);
+ overflow:hidden;color:#fff;text-align:center;
+}
+canvas{position:fixed;top:0;left:0;z-index:0}
+.card{
+ position:absolute;z-index:2;
+ top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ width:90%;max-width:430px;
+ padding:36px;border-radius:30px;
+ background:rgba(255,255,255,.18);
+ backdrop-filter:blur(20px);
+ box-shadow:0 30px 90px rgba(0,0,0,.45);
+ animation:fade 1.2s ease;
+}
+@keyframes fade{from{opacity:0;transform:translate(-50%,-60%)}to{opacity:1}}
+button{
+ padding:14px 40px;margin:12px;
+ border:none;border-radius:40px;
+ font-size:18px;cursor:pointer;
+}
+#yes{
+ background:linear-gradient(135deg,#ff1744,#ff616f);
+ color:#fff;
+}
+#no{background:#fff;color:#ff1744}
+#photo{
+ display:none;width:100%;
+ border-radius:22px;margin-top:20px;
+ animation:zoom 1s ease;
+}
+@keyframes zoom{from{transform:scale(.7);opacity:0}to{opacity:1}}
+#message{display:none;margin-top:16px;font-size:18px}
+footer{margin-top:16px;font-size:14px;opacity:.9}
+.heart{
+ position:fixed;bottom:-10px;
+ font-size:22px;animation:float 6s linear forwards;
+}
+@keyframes float{
+ to{transform:translateY(-120vh);opacity:0}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="card">
+<h1>Dimpal ❤️</h1>
+<p>You didn’t just enter my life,<br>you became my favorite chapter.</p>
+
+<h2>Will you be my Valentine? 💍</h2>
+
+<button id="yes" onclick="yes()">YES 💖</button>
+<button id="no" onmouseover="moveNo()">NO 🙈</button>
+
+<img id="photo" src="photo1.jpg">
+<div id="message">
+<p>
+You’re my today,  
+my tomorrow,  
+and every heartbeat in between. 💞
+</p>
+</div>
+
+<footer>Forever yours, Monty ❤️</footer>
+</div>
+
+<audio id="music" src="music.mp3" loop></audio>
+
+<script>
+// NO button escape
+function moveNo(){
+ let x=Math.random()*200-100;
+ let y=Math.random()*200-100;
+ document.getElementById("no").style.transform=`translate(${x}px,${y}px)`
+}
+
+// YES action
+let pics=["photo1.jpg","photo2.jpg","photo3.jpg"];
+let i=0;
+
+function yes(){
+ fadeMusic();
+ startFireworks();
+ showHearts();
+ document.getElementById("photo").style.display="block";
+ document.getElementById("message").style.display="block";
+ setInterval(()=>{
+  i=(i+1)%pics.length;
+  document.getElementById("photo").src=pics[i];
+ },2500);
+}
+
+// Floating hearts
+function showHearts(){
+ setInterval(()=>{
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML=["❤️","💖","💘","🌹"][Math.floor(Math.random()*4)];
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+ },500);
+}
+
+// Music fade in
+function fadeMusic(){
+ let music=document.getElementById("music");
+ music.volume=0;
+ music.play();
+ let v=0;
+ let fade=setInterval(()=>{
+  if(v<1){v+=0.05;music.volume=v}else clearInterval(fade);
+ },200);
+}
+
+// Fireworks
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+let fireworks=[];
+
+function startFireworks(){
+ setInterval(()=>{
+  fireworks.push({
+   x:Math.random()*canvas.width,
+   y:canvas.height,
+   dx:(Math.random()-.5)*4,
+   dy:-(Math.random()*6+6),
+   r:2,life:60
+  });
+ },300);
+ animate();
+}
+
+function animate(){
+ requestAnimationFrame(animate);
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ fireworks.forEach((f,i)=>{
+  ctx.beginPath();
+  ctx.arc(f.x,f.y,f.r,0,Math.PI*2);
+  ctx.fillStyle="white";
+  ctx.fill();
+  f.x+=f.dx;
+  f.y+=f.dy;
+  f.dy+=0.1;
+  f.life--;
+  if(f.life<=0)fireworks.splice(i,1);
+ });
+}
+</script>
+
+</body>
+</html>

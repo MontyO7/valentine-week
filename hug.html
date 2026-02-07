@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Hug Day 🤗</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  font-family:Poppins;
+  background:radial-gradient(circle at top,#ff9bbf,#ffe6ea 65%);
+  overflow:hidden;
+  color:#fff;
+}
+
+/* Glass Card */
+.card{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  width:90%;
+  max-width:380px;
+  padding:28px;
+  border-radius:26px;
+  background:rgba(255,255,255,.15);
+  backdrop-filter:blur(18px);
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+  text-align:center;
+}
+
+/* Hug Emoji */
+#hug{
+  font-size:95px;
+  cursor:pointer;
+  margin:10px 0;
+  transition:.4s;
+  filter:drop-shadow(0 10px 25px rgba(0,0,0,.35));
+}
+#hug:hover{transform:scale(1.15)}
+
+/* Floating Hearts */
+.heart{
+  position:fixed;
+  bottom:0;
+  font-size:24px;
+  animation:floatUp 3s linear forwards;
+}
+@keyframes floatUp{
+  to{transform:translateY(-120vh);opacity:0}
+}
+
+/* Progress Bar */
+.progress{
+  margin:18px 0;
+  height:8px;
+  border-radius:10px;
+  background:rgba(255,255,255,.3);
+  overflow:hidden;
+}
+.progress span{
+  display:block;
+  height:100%;
+  width:70%;
+  background:linear-gradient(90deg,#ff4d6d,#ff85a1);
+}
+
+/* Next Button */
+#next{
+  display:none;
+  margin-top:16px;
+  padding:12px 30px;
+  border:none;
+  border-radius:30px;
+  font-size:15px;
+  font-weight:600;
+  background:linear-gradient(135deg,#ff4d6d,#ff85a1);
+  color:#fff;
+  box-shadow:0 10px 30px rgba(0,0,0,.3);
+  cursor:pointer;
+}
+
+#timer{
+  margin-top:12px;
+  font-size:14px;
+  opacity:.9;
+}
+</style>
+</head>
+
+<body>
+
+<!-- DATE LOCK -->
+<script>
+if(new Date() < new Date(2026,1,12)){
+  document.body.innerHTML =
+  "<h2 style='color:white;text-align:center;margin-top:40vh'>⏳ Hug Day unlocks on 12 Feb 🤗</h2>";
+}
+</script>
+
+<div class="card">
+  <h2>Happy Hug Day 🤗</h2>
+  <p>Tap the hug to feel the warmth</p>
+
+  <div id="hug" onclick="hugLove()">🤗</div>
+
+  <p id="msg">Dimpal, every hug of yours feels like home 💞</p>
+
+  <div class="progress"><span></span></div>
+  <small>Valentine Week Journey</small>
+
+  <p id="timer"></p>
+  <button id="next" onclick="location.href='kiss.html'">Next Day → 😘</button>
+
+  <p style="margin-top:14px;font-size:13px">From Monty ❤️</p>
+</div>
+
+<script>
+/* Hug Interaction */
+function hugLove(){
+  for(let i=0;i<35;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML = Math.random()>0.5 ? "🤗" : "💞";
+    h.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),3000);
+  }
+}
+
+/* Countdown Timer */
+const unlockNext = new Date("Feb 13, 2026 00:00:00").getTime();
+
+const timerInt = setInterval(()=>{
+  const now = new Date().getTime();
+  const diff = unlockNext - now;
+
+  if(diff <= 0){
+    document.getElementById("timer").innerText = "💖 Kiss Day Unlocked!";
+    document.getElementById("next").style.display = "inline-block";
+    clearInterval(timerInt);
+    return;
+  }
+
+  const h = Math.floor(diff / (1000*60*60));
+  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  const s = Math.floor((diff % (1000*60)) / 1000);
+
+  document.getElementById("timer").innerText =
+   `⏳ Next unlock in ${h}h ${m}m ${s}s`;
+},1000);
+</script>
+
+</body>
+</html>

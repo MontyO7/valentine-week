@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Promise Day 🤞</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+ margin:0;height:100vh;font-family:Poppins;
+ background:radial-gradient(circle,#6a5acd,#e6e6ff);
+ color:#fff;overflow:hidden
+}
+.card{
+ position:absolute;top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ width:90%;max-width:380px;
+ padding:28px;border-radius:24px;
+ background:rgba(255,255,255,.15);
+ backdrop-filter:blur(18px);
+ text-align:center
+}
+#hand{
+ font-size:90px;
+ cursor:pointer;
+ transition:.4s
+}
+#hand:hover{transform:scale(1.2)}
+.promise{
+ opacity:0;
+ margin-top:10px;
+ font-size:14px;
+ animation:fade 3s forwards
+}
+@keyframes fade{to{opacity:1}}
+.heart{
+ position:fixed;bottom:0;font-size:22px;
+ animation:up 3s linear forwards
+}
+@keyframes up{to{transform:translateY(-120vh);opacity:0}}
+#next{display:none;margin-top:16px;padding:12px 30px;border:none;border-radius:30px;
+ background:linear-gradient(135deg,#ff4d6d,#ff85a1);color:#fff}
+#countdown{font-size:14px;margin-top:12px}
+</style>
+</head>
+
+<body>
+
+<script>
+if(new Date()<new Date("Feb 11, 2026")){
+ document.body.innerHTML="<h2 style='text-align:center;margin-top:40vh'>⏳ Promise Day Locked</h2>";
+}
+</script>
+
+<div class="card">
+<h2>Happy Promise Day 🤞</h2>
+<div id="hand">🤞</div>
+
+<div id="promises"></div>
+
+<div id="countdown"></div>
+<p id="timer" style="margin-top:12px;font-size:14px;opacity:.9"></p>
+
+<button id="next" onclick="location.href='hug.html'">Next → 🤗</button>
+<p>From Monty ❤️</p>
+</div>
+
+<script>
+const lines=[
+ "I promise to stand by you.",
+ "I promise to love you every day.",
+ "Forever, mera pyara betu ❤️"
+];
+
+hand.onclick=()=>{
+ promises.innerHTML="";
+ lines.forEach((l,i)=>{
+  setTimeout(()=>{
+   let p=document.createElement("div");
+   p.className="promise";
+   p.innerText=l;
+   promises.appendChild(p);
+  },i*700);
+ });
+
+ for(let i=0;i<25;i++){
+  let h=document.createElement("div");
+  h.className="heart";h.innerHTML="🤞";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+ }
+};
+
+const unlock=new Date("Feb 12, 2026").getTime();
+setInterval(()=>{
+ if(Date.now()>=unlock) next.style.display="inline-block";
+},1000);
+</script>
+<script>
+const unlockDate = new Date("Feb 12, 2026 00:00:00").getTime();
+
+const timerInterval = setInterval(() => {
+  const now = new Date().getTime();
+  const diff = unlockDate - now;
+
+  if (diff <= 0) {
+    document.getElementById("timer").innerText = "✅ Unlocked!";
+    document.getElementById("next").style.display = "inline-block";
+    clearInterval(timerInterval);
+    return;
+  }
+
+  const h = Math.floor(diff / (1000 * 60 * 60));
+  const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+  const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+  document.getElementById("timer").innerText =
+    `⏳ Unlocks in ${h}h ${m}m ${s}s`;
+}, 1000);
+</script>
+
+</body>
+</html>

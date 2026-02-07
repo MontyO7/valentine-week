@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Propose Day 💍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+ margin:0;height:100vh;font-family:Poppins;
+ background:radial-gradient(circle at top,#ff7aa2,#ffe6ea 65%);
+ overflow:hidden;color:#fff
+}
+.card{
+ position:absolute;top:50%;left:50%;
+ transform:translate(-50%,-50%);
+ width:90%;max-width:380px;
+ padding:28px;border-radius:24px;
+ background:rgba(255,255,255,.15);
+ backdrop-filter:blur(18px);
+ box-shadow:0 20px 60px rgba(0,0,0,.25);
+ text-align:center
+}
+#ring{
+ font-size:90px;
+ cursor:pointer;
+ transition:.4s
+}
+#ring:hover{transform:scale(1.15)}
+.heart{
+ position:fixed;
+ bottom:0;
+ font-size:22px;
+ animation:up 3s linear forwards
+}
+@keyframes up{
+ to{transform:translateY(-120vh);opacity:0}
+}
+.progress{
+ margin:18px 0;
+ height:8px;
+ border-radius:10px;
+ background:rgba(255,255,255,.3)
+}
+.progress span{
+ display:block;
+ height:100%;
+ width:28%;
+ background:linear-gradient(90deg,#ff4d6d,#ff85a1)
+}
+#next{
+ display:none;
+ margin-top:16px;
+ padding:12px 30px;
+ border:none;
+ border-radius:30px;
+ background:linear-gradient(135deg,#ff4d6d,#ff85a1);
+ color:#ffffff;
+ font-weight:600;
+ cursor:pointer
+}
+#countdown{
+ font-size:14px;
+ margin-top:12px;
+ opacity:.9
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🔒 PAGE LOCK -->
+<script>
+const pageDate = new Date("Feb 8, 2026 00:00:00");
+if (new Date() < pageDate) {
+ document.body.innerHTML = `
+  <div style="
+   height:100vh;
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   background:linear-gradient(135deg,#ff4d6d,#ff85a1);
+   color:white;
+   font-family:Poppins;
+   text-align:center;">
+    <div>
+     <h2>⏳ Propose Day Locked</h2>
+     <p>Unlocks on Feb 8 💍</p>
+    </div>
+  </div>
+ `;
+}
+</script>
+
+<div class="card">
+<h2>Happy Propose Day 💍</h2>
+<p>Tap the ring</p>
+
+<div id="ring">💍</div>
+
+<p>Dimpal, my heart chose you.</p>
+
+<div class="progress"><span></span></div>
+<small>Valentine Week Journey</small>
+
+<div id="countdown"></div>
+
+<button id="next" onclick="location.href='chocolate.html'">
+ Next Day → 🍫
+</button>
+
+<p style="margin-top:12px;font-size:13px">From Monty ❤️</p>
+</div>
+
+<script>
+/* 💍 Ring click = animation ONLY */
+document.getElementById("ring").addEventListener("click",()=>{
+ for(let i=0;i<30;i++){
+  let h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="❤️";
+  h.style.left=Math.random()*100+"vw";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),3000);
+ }
+});
+
+/* ⏳ TIMER ONLY UNLOCK */
+const unlockTime = new Date("Feb 9, 2026 00:00:00").getTime();
+const nextBtn = document.getElementById("next");
+const countdown = document.getElementById("countdown");
+
+setInterval(()=>{
+ const diff = unlockTime - Date.now();
+
+ if(diff <= 0){
+  countdown.innerHTML = "🤍 Chocolate Day Unlocked";
+  nextBtn.style.display = "inline-block";
+ } else {
+  const h = Math.floor(diff / (1000*60*60));
+  const m = Math.floor((diff % (1000*60*60)) / (1000*60));
+  countdown.innerHTML = `⏳ Unlocks in ${h}h ${m}m`;
+ }
+},1000);
+</script>
+
+</body>
+</html>
